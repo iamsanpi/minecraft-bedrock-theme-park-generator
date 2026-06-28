@@ -1,18 +1,26 @@
-# Minecraft Bedrock Theme Park Generator
+# Minecraft Bedrock Map Generator (.mcpack + 3D Preview)
 
-A local Minecraft Bedrock map generator for building a kid-friendly space theme park, previewing the generated Bedrock function output in the browser, and exporting an importable `.mcpack` behavior pack.
+A TypeScript Minecraft Bedrock map generator and `.mcpack` behavior-pack exporter with a browser 3D voxel preview. It includes a kid-friendly rocket theme park example, generated from real Bedrock `/fill`, `/setblock`, and `/function` commands.
 
-The project is designed for iterative map making: adjust the generated blueprint, inspect the browser preview, then export only when the build is worth testing inside Minecraft.
+The project is designed for iterative Minecraft map making: adjust the generated blueprint, inspect the browser preview, then export an importable Bedrock `.mcpack` only when the build is worth testing inside Minecraft.
 
 ![Rocket launch complex preview](docs/assets/rocket-preview.png)
 
 ## Features
 
-- Generates a large Bedrock theme park from real `/fill`, `/setblock`, and `/function` commands.
+- Generates a large Minecraft Bedrock map from real `/fill`, `/setblock`, and `/function` commands.
 - Renders the generated command output in a local browser preview before importing into Minecraft.
 - Exports a Bedrock `.mcpack` behavior pack with `/function build`, `/function start`, `/function rescue`, and `/function clear`.
 - Includes a space-launch entrance, vehicle-scale road grid, rocket plaza, launch tower, team HQ buildings, laser maze, rover speedway, and crystal area.
 - Keeps generated files out of git: `.mcpack` packages, build output, debug screenshots, and local Minecraft assets are intentionally ignored.
+
+## Good For
+
+- Minecraft Bedrock map generator experiments
+- `.mcpack` behavior pack generation
+- Browser-based 3D preview before importing into Minecraft
+- Theme park, rocket base, and large voxel build prototyping
+- Kid-friendly Minecraft world building tools
 
 ## Requirements
 

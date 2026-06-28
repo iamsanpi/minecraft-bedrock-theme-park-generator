@@ -1,10 +1,31 @@
 {
-  "name": "minecraft-kids-map-tool",
+  "name": "minecraft-bedrock-map-generator",
   "version": "0.1.0",
-  "description": "Local Minecraft Bedrock theme park generator with browser preview and mcpack export.",
+  "description": "Minecraft Bedrock map generator with browser 3D preview, mcpack export, and behavior-pack functions.",
   "private": true,
   "license": "MIT",
   "type": "module",
+  "keywords": [
+    "minecraft",
+    "minecraft-bedrock",
+    "bedrock-edition",
+    "mcpack",
+    "behavior-pack",
+    "minecraft-map",
+    "map-generator",
+    "voxel",
+    "theme-park",
+    "rocket",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iamsanpi/minecraft-bedrock-theme-park-generator.git"
+  },
+  "homepage": "https://github.com/iamsanpi/minecraft-bedrock-theme-park-generator#readme",
+  "bugs": {
+    "url": "https://github.com/iamsanpi/minecraft-bedrock-theme-park-generator/issues"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "npm run build && node server.mjs",
