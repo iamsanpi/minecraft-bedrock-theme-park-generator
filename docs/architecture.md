@@ -14,6 +14,12 @@ src/index.ts
 
 The preview is not hand-drawn concept art. It is derived from the same function output that goes into the exported Bedrock behavior pack. That keeps visual iteration closer to what Minecraft will build.
 
+## Current Theme Model
+
+The project currently has one polished large Bedrock reference scene: the `moon-base` rocket theme. Other themes exist as kid-facing concepts, palettes, and simpler command templates, but they are not yet full coordinate-authored large parks.
+
+This is a deliberate tradeoff. Minecraft-scale architecture needs exact positions, layer boundaries, floor heights, entrances, roads, interiors, and material choices. The generator keeps that detail in code so it can be previewed, tested, and exported repeatably.
+
 ## Design Principles
 
 - **Generate first, render second:** the map is generated as Minecraft commands before it is visualized.
@@ -21,6 +27,7 @@ The preview is not hand-drawn concept art. It is derived from the same function 
 - **Use blueprint metadata:** generated comments describe major layer and bounding-box boundaries so large builds stay inspectable.
 - **Make preview cheap:** browser iteration is faster than repeated Minecraft imports, especially for large Bedrock maps.
 - **Validate Minecraft constraints:** tests guard against oversized Bedrock `/fill` commands and missing gameplay functions.
+- **Author new themes explicitly:** a new high-quality theme should get its own scene modules, tests, screenshots, and preview passes.
 
 ## Main Boundaries
 
@@ -53,3 +60,5 @@ User chooses theme/modules in the browser
 - rocket and launch tower placement
 - entrance gate and logo placement
 - interior access details and helper functions
+
+For the recommended process for new themes, see [extending-themes.md](extending-themes.md).

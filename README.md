@@ -20,6 +20,16 @@ The browser preview is the drafting table. The full sense of scale only lands on
 - Includes a space-launch entrance, vehicle-scale road grid, rocket plaza, launch tower, team HQ buildings, laser maze, rover speedway, and crystal area.
 - Keeps generated files out of git: `.mcpack` packages, build output, debug screenshots, and local Minecraft assets are intentionally ignored.
 
+## Current Scope
+
+This is a polished reference generator, not a magic prompt-to-perfect-map engine.
+
+The full large Bedrock park currently targets the `moon-base` rocket theme. The other built-in themes provide kid-facing planning copy, palettes, and simpler command paths, but they do not yet have the same coordinate-authored large Bedrock park treatment.
+
+That is intentional for now: the high-detail scene is hand/AI-authored at coordinate level, then verified with browser preview and tests. Adding another polished theme means adding new structure modules, road plans, interiors, materials, preview checks, and tests instead of only changing a theme name.
+
+See [docs/extending-themes.md](docs/extending-themes.md) for the recommended AI-assisted workflow.
+
 ## Architecture Highlights
 
 - **Command-driven preview:** the browser renderer reads the same generated Bedrock command stream that is packaged into the `.mcpack`.
@@ -27,6 +37,7 @@ The browser preview is the drafting table. The full sense of scale only lands on
 - **Blueprint boundaries:** large areas are grouped by layer and bounding boxes, making roads, buildings, interiors, launch structures, and decorations easier to audit.
 - **Preview-first workflow:** iterate in the browser, inspect cameras and metrics, then export only when the generated build is worth importing into Minecraft.
 - **Bedrock-aware validation:** tests check command markers, function entries, road layout, rocket/gate details, and per-command `/fill` volume limits.
+- **AI-assisted authoring:** new polished themes are expected to be created with an AI/code agent plus Minecraft screenshots, coordinate tests, and repeated preview passes.
 
 ## Good For
 
@@ -115,7 +126,7 @@ exports/                     generated .mcpack files, ignored by git
 artifacts/                   local debug screenshots, ignored by git
 ```
 
-See [docs/architecture.md](docs/architecture.md) for the command pipeline and module boundaries.
+See [docs/architecture.md](docs/architecture.md) for the command pipeline and module boundaries, and [docs/extending-themes.md](docs/extending-themes.md) for adding more polished themes.
 
 ## Validation
 
