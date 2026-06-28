@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>家庭 Minecraft 地图小导演</title>
+    <link rel="stylesheet" href="./styles.css?v=39" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">家庭自用地图工具</p>
+          <h1>地图小导演</h1>
+        </div>
+        <div class="top-actions" aria-label="快速操作">
+          <button class="icon-button" id="randomizeButton" type="button" title="随机换一个地图">
+            <span class="icon-shuffle" aria-hidden="true"></span>
+            <span>随机</span>
+          </button>
+          <button class="icon-button" id="resetButton" type="button" title="清空今天的勾选">
+            <span class="icon-reset" aria-hidden="true"></span>
+            <span>重来</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="now-panel" aria-live="polite">
+        <div>
+          <p class="label">现在</p>
+          <h2 id="currentPick"></h2>
+          <p id="currentHint"></p>
+        </div>
+        <div class="now-actions">
+          <button id="jumpModules" type="button">选机关</button>
+          <button id="jumpResult" type="button">看任务</button>
+          <button id="jumpParent" type="button">复制区</button>
+        </div>
+      </section>
+
+      <section class="voxel-editor" aria-labelledby="voxelEditorTitle">
+        <div class="voxel-toolbar">
+          <div>
+            <p class="label">3D 预览</p>
+            <h2 id="voxelEditorTitle">Bedrock 函数实景编辑器</h2>
+          </div>
+          <div class="camera-actions" aria-label="预览视角">
+            <button id="refreshPreview" type="button">刷新</button>
+            <button type="button" data-camera="poster">效果图视角</button>
+            <button type="button" data-camera="top">俯视</button>
+            <button type="button" data-camera="rocket">火箭</button>
+            <button type="button" data-camera="gate">大门</button>
+            <button type="button" data-camera="gateLogo">Logo细节</button>
+            <button type="button" data-camera="gateBack">大门后侧</button>
+            <button type="button" data-camera="greenHqBedroom">绿楼二层</button>
+            <button type="button" data-camera="gateLantern">挂灯细节</button>
+          </div>
+          <div class="layer-actions" id="layerActions" aria-label="地图图层"></div>
+        </div>
+        <div class="voxel-stage" id="voxelStage">
+          <canvas id="voxelCanvas" aria-label="Bedrock 地图 3D 预览"></canvas>
+          <div class="voxel-status" id="voxelStatus">等待生成预览</div>
+        </div>
+        <div class="preview-metrics" id="previewMetrics" aria-label="预览数据"></div>
+        <div class="block-legend" id="blockLegend" aria-label="材料颜色"></div>
+        <div class="editor-workbench" aria-label="专业地图工作台">
+          <section class="material-board" aria-labelledby="materialBoardTitle">
+            <div class="workbench-heading">
+              <p class="label">材料</p>
+              <h3 id="materialBoardTitle">材料语义</h3>
+            </div>
+            <div class="material-grid" id="materialBoard"></div>
+          </section>
+          <section class="component-board" aria-labelledby="componentBoardTitle">
+            <div class="workbench-heading">
+              <p class="label">结构</p>
+              <h3 id="componentBoardTitle">结构件</h3>
+            </div>
+            <div class="component-grid" id="componentLibrary"></div>
+          </section>
+          <section class="audit-board" aria-labelledby="auditBoardTitle">
+            <div class="workbench-heading">
+              <p class="label">质检</p>
+              <h3 id="auditBoardTitle">实心/承重审计</h3>
+            </div>
+            <div class="audit-list" id="structureAudit"></div>
+          </section>
+          <section class="audit-board" aria-labelledby="blueprintBoardTitle">
+            <div class="workbench-heading">
+              <p class="label">图纸</p>
+              <h3 id="blueprintBoardTitle">蓝图边界</h3>
+            </div>
+            <div class="audit-list blueprint-list" id="blueprintAudit"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="workspace" aria-label="地图制作工具">
+        <section class="builder-panel" aria-labelledby="builderTitle">
+          <div class="section-heading">
+            <p class="step-label">1</p>
+            <h2 id="builderTitle">选今天的世界</h2>
+          </div>
+          <div class="theme-grid" id="themeGrid"></div>
+
+          <div class="option-row" aria-label="地图大小">
+            <button class="segmented active" type="button" data-size="tiny">20 分钟</button>
+            <button class="segmented" type="button" data-size="cozy">一晚上</button>
+            <button class="segmented" type="button" data-size="big">周末大图</button>
+          </div>
+
+          <div class="section-heading compact">
+            <p class="step-label">2</p>
+            <h2>选要建的机关</h2>
+          </div>
+          <div class="module-grid" id="moduleGrid"></div>
+          <button class="wide-action" id="jumpResultFromModules" type="button">看今天任务</button>
+
+          <div class="parent-controls">
+            <label class="toggle">
+              <input id="gentleMode" type="checkbox" checked />
+              <span>小朋友安全版</span>
+            </label>
+            <label class="select-label" for="editionSelect">家长指令</label>
+            <select id="editionSelect">
+              <option value="java-worldedit">Java + WorldEdit</option>
+              <option value="bedrock">Bedrock 指令</option>
+              <option value="no-commands">不用指令</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="result-panel" aria-labelledby="resultTitle">
+          <div class="section-heading">
+            <p class="step-label">3</p>
+            <h2 id="resultTitle">今天的地图任务</h2>
+          </div>
+
+          <figure class="scene-figure">
+            <img src="./minecraft-scene-preview.png?v=2" alt="Minecraft Bedrock 风格月亮基地主题乐园概念参考" />
+            <figcaption>概念参考：不是逐块截图。真正可导入的是下面生成的 Bedrock Final 地图包。</figcaption>
+          </figure>
+
+          <figure class="blueprint-figure">
+            <img src="./park-preview.svg?v=2" alt="月亮基地主题乐园俯视示意图" />
+            <figcaption>布局图：Final 函数会按这个方向生成入口、火箭、四个项目区、空中轨道和最终发射区。</figcaption>
+          </figure>
+
+          <div class="map-preview" id="mapPreview" aria-label="地图预览"></div>
+
+          <article class="mission-card">
+            <p class="label">故事</p>
+            <h3 id="planTitle"></h3>
+            <p id="missionText"></p>
+            <div class="palette-row" id="paletteRow" aria-label="推荐方块"></div>
+          </article>
+
+          <article class="route-card">
+            <p class="label">进游戏玩法</p>
+            <ol id="parkRoute"></ol>
+          </article>
+
+          <div class="task-list" id="taskList" aria-label="小朋友任务清单"></div>
+
+          <div class="reward-strip">
+            <span>完成奖励</span>
+            <strong id="rewardText"></strong>
+            <button id="speakButton" type="button">读给我听</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="parent-panel" aria-labelledby="parentTitle">
+        <div class="section-heading">
+          <p class="step-label">家长</p>
+          <h2 id="parentTitle">复制区</h2>
+        </div>
+        <div class="command-layout">
+          <div>
+            <h3>建议做法</h3>
+            <ul id="parentNotes"></ul>
+          </div>
+          <div>
+            <div class="command-heading">
+              <h3>可复制指令</h3>
+              <button id="copyButton" type="button">复制全部</button>
+            </div>
+            <pre id="commandOutput"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="minecraft-panel" aria-labelledby="minecraftTitle">
+        <div class="section-heading">
+          <p class="step-label">游戏</p>
+          <h2 id="minecraftTitle">导出 Bedrock 主题乐园地图包</h2>
+        </div>
+        <div class="minecraft-layout">
+          <div>
+            <p class="minecraft-copy">
+              生成一个 Bedrock 可导入的 <strong>.mcpack</strong>。导入 Minecraft 后，把行为包应用到一个开启作弊的创造模式世界，再运行函数生成大型主题乐园。
+            </p>
+            <div class="world-controls">
+              <button id="exportBedrockPack" type="button">生成 Bedrock 地图包</button>
+              <a class="download-link" id="downloadBedrockPack" href="#" hidden>下载 .mcpack</a>
+            </div>
+          </div>
+          <div class="minecraft-next">
+            <p class="label">进游戏后运行</p>
+            <code>/function build</code>
+            <code>/function start</code>
+            <code>/function rescue</code>
+            <code>/function clear</code>
+          </div>
+        </div>
+        <p class="export-status" id="exportStatus"></p>
+      </section>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.179.1/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.179.1/examples/jsm/"
+        }
+      }
+    </script>
+    <script src="./app.js?v=80" type="module"></script>
+  </body>
+</html>

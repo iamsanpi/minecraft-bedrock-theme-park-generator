@@ -1,0 +1,21 @@
+{
+  "name": "minecraft-kids-map-tool",
+  "version": "0.1.0",
+  "description": "Local Minecraft Bedrock theme park generator with browser preview and mcpack export.",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "npm run build && node server.mjs",
+    "sync:minecraft-assets": "node scripts/sync-minecraft-assets.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test dist/**/*.test.js",
+    "test:unit": "npm run build && npm run test",
+    "validate": "npm run typecheck && npm run test:unit"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.3",
+    "typescript": "^5.9.0"
+  }
+}
