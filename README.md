@@ -74,9 +74,11 @@ Full export guide: [docs/exporting-bedrock.md](docs/exporting-bedrock.md)
 
 1. Open the downloaded `.mcpack` file.
 2. Wait for Minecraft to show the successful import message.
-3. Create a Creative world with cheats enabled, or edit an existing test world.
-4. Activate the imported behavior pack for that world.
-5. Enter the world and run:
+3. In Minecraft, choose `Play` -> `Create New` -> `Create New World`.
+4. Set the world to Creative mode and turn cheats on.
+5. Open the world's `Behavior Packs` section, find the imported theme park pack under `Available`, and click `Activate`.
+6. Create the world, enter it, and stand where the center of the park should be.
+7. Open chat and run:
 
 ```text
 /function build
