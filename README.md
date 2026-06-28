@@ -6,6 +6,12 @@ The project is designed for iterative Minecraft map making: adjust the generated
 
 ![Rocket launch complex preview](docs/assets/rocket-preview.png)
 
+## See The Scale In Minecraft
+
+The browser preview is the drafting table. The full sense of scale only lands once the pack is imported into Minecraft: stand at the base of the rocket tower, look up, and the generated build stops feeling like a small model. It becomes a towering launch park you can walk through.
+
+![In-game rocket tower scale](docs/assets/in-game-rocket-tower.png)
+
 ## Features
 
 - Generates a large Minecraft Bedrock map from real `/fill`, `/setblock`, and `/function` commands.
