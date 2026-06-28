@@ -14,6 +14,14 @@ The project is designed for iterative Minecraft map making: adjust the generated
 - Includes a space-launch entrance, vehicle-scale road grid, rocket plaza, launch tower, team HQ buildings, laser maze, rover speedway, and crystal area.
 - Keeps generated files out of git: `.mcpack` packages, build output, debug screenshots, and local Minecraft assets are intentionally ignored.
 
+## Architecture Highlights
+
+- **Command-driven preview:** the browser renderer reads the same generated Bedrock command stream that is packaged into the `.mcpack`.
+- **Single source of truth:** map geometry lives in the TypeScript generator instead of being duplicated between a web preview and a Minecraft export.
+- **Blueprint boundaries:** large areas are grouped by layer and bounding boxes, making roads, buildings, interiors, launch structures, and decorations easier to audit.
+- **Preview-first workflow:** iterate in the browser, inspect cameras and metrics, then export only when the generated build is worth importing into Minecraft.
+- **Bedrock-aware validation:** tests check command markers, function entries, road layout, rocket/gate details, and per-command `/fill` volume limits.
+
 ## Good For
 
 - Minecraft Bedrock map generator experiments
@@ -96,6 +104,8 @@ docs/                        open-source usage guides and screenshots
 exports/                     generated .mcpack files, ignored by git
 artifacts/                   local debug screenshots, ignored by git
 ```
+
+See [docs/architecture.md](docs/architecture.md) for the command pipeline and module boundaries.
 
 ## Validation
 

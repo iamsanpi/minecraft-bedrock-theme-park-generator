@@ -1,18 +1,26 @@
 # Architecture
 
-The generator uses one source of truth: generated Minecraft commands.
+The generator uses one source of truth: generated Minecraft commands. The browser preview and the exported `.mcpack` are both derived from the same Bedrock function output.
 
 ```text
 src/index.ts
-  -> Bedrock function command text
-  -> /api/preview-bedrock
-  -> browser voxel preview
-  -> .mcpack behavior pack export
+  -> buildBedrockThemeParkFunction()
+  -> Bedrock /fill, /setblock, /function command text
+  -> /api/preview-bedrock -> browser voxel preview
+  -> /api/export-bedrock  -> .mcpack behavior pack
 ```
 
 ## Why This Matters
 
 The preview is not hand-drawn concept art. It is derived from the same function output that goes into the exported Bedrock behavior pack. That keeps visual iteration closer to what Minecraft will build.
+
+## Design Principles
+
+- **Generate first, render second:** the map is generated as Minecraft commands before it is visualized.
+- **Keep geometry centralized:** coordinates, materials, function names, and structure placement are owned by `src/index.ts`.
+- **Use blueprint metadata:** generated comments describe major layer and bounding-box boundaries so large builds stay inspectable.
+- **Make preview cheap:** browser iteration is faster than repeated Minecraft imports, especially for large Bedrock maps.
+- **Validate Minecraft constraints:** tests guard against oversized Bedrock `/fill` commands and missing gameplay functions.
 
 ## Main Boundaries
 
@@ -22,3 +30,26 @@ The preview is not hand-drawn concept art. It is derived from the same function 
 - `docs/` owns human-facing tutorials and screenshots.
 
 Generated outputs are intentionally excluded from git.
+
+## Data Flow
+
+```text
+User chooses theme/modules in the browser
+  -> server returns generated Bedrock function text
+  -> browser parses command text into voxel preview data
+  -> user inspects cameras, metrics, and structure boundaries
+  -> server packages the same generated function text into a Bedrock behavior pack
+  -> Minecraft runs /function build and /function start
+```
+
+## Validation Surface
+
+`npm run validate` runs TypeScript checks and unit tests over the generator. The current tests cover:
+
+- expected function entry points
+- large map command markers
+- Bedrock per-command `/fill` volume limits
+- vehicle-scale road layout
+- rocket and launch tower placement
+- entrance gate and logo placement
+- interior access details and helper functions
