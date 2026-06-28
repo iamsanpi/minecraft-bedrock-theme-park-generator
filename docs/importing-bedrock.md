@@ -47,6 +47,8 @@ Run:
 /function build
 ```
 
+Run exactly `/function build` for the full park. Do not run `internal_steps/step_*` manually; those internal functions are partial chunks and can create only part of the map.
+
 Then run:
 
 ```text

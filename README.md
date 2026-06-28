@@ -85,6 +85,8 @@ Full export guide: [docs/exporting-bedrock.md](docs/exporting-bedrock.md)
 /function start
 ```
 
+Run exactly `/function build` for the full park. Do not run `internal_steps/step_*` manually; those are partial chunks used by the build dispatcher.
+
 Use these helper functions when needed:
 
 ```text

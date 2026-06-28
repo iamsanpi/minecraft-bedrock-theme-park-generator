@@ -154,11 +154,12 @@ function buildBedrockDispatcher(stepCount) {
     "# Small dispatcher so Bedrock can list /function build even when the park is large.",
     "gamerule commandblockoutput false",
     'tellraw @a {"rawtext":[{"text":"§bKids Map Tool: 开始分段生成最终版月亮基地乐园..."}]}',
+    'tellraw @a {"rawtext":[{"text":"§e请运行 /function build，不要手动运行 internal_steps/step_*，那些只是内部分块。"}]}',
   ];
 
   for (let index = 1; index <= stepCount; index += 1) {
     const step = String(index).padStart(2, "0");
-    lines.push(`function build_steps/step_${step}`);
+    lines.push(`function internal_steps/step_${step}`);
   }
 
   lines.push(
@@ -169,11 +170,11 @@ function buildBedrockDispatcher(stepCount) {
 }
 
 async function writeBedrockPack(config) {
-  const packName = "Kids Moon Base Theme Park Final v29 Aligned Rocket Gantry";
+  const packName = "Kids Moon Base Theme Park v30 Full Build";
   const packRoot = join(exportDir, "bedrock-kids-theme-park-pack");
   const functionsDir = join(packRoot, "functions");
   const functionsRoot = join(functionsDir, "kidspark");
-  const buildStepsRoot = join(functionsDir, "build_steps");
+  const buildStepsRoot = join(functionsDir, "internal_steps");
   await rm(packRoot, { recursive: true, force: true });
   await mkdir(functionsRoot, { recursive: true });
   await mkdir(buildStepsRoot, { recursive: true });
@@ -192,14 +193,14 @@ async function writeBedrockPack(config) {
           name: packName,
           description: "Generates a large child-friendly Bedrock theme park with /function build.",
           uuid: randomUUID(),
-          version: [1, 0, 29],
+          version: [1, 0, 30],
           min_engine_version: [1, 20, 0],
         },
         modules: [
           {
             type: "data",
             uuid: randomUUID(),
-            version: [1, 0, 29],
+            version: [1, 0, 30],
           },
         ],
       },
@@ -240,6 +241,9 @@ async function writeBedrockPack(config) {
       "/function build",
       "/function start",
       "",
+      "Do not run internal_steps/step_* manually. Those are partial chunks used by /function build.",
+      "If you only see one rocket tower, create a new test world or move to a fresh open area, then run exactly: /function build",
+      "",
       "If the player is stuck or cannot find the park, run:",
       "/function rescue",
       "",
@@ -258,7 +262,7 @@ async function writeBedrockPack(config) {
     ].join("\n"),
   );
   await mkdir(exportDir, { recursive: true });
-  const mcpackPath = join(exportDir, "kids-moon-base-theme-park-final-v29-aligned-rocket-gantry.mcpack");
+  const mcpackPath = join(exportDir, "kids-moon-base-theme-park-v30-full-build.mcpack");
   await zipDirectory(packRoot, mcpackPath);
   await copyFile(mcpackPath, join(exportDir, "kids-moon-base-theme-park.mcpack"));
   return { packRoot, mcpackPath };

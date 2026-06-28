@@ -69,6 +69,8 @@ Namespaced aliases are also generated:
 
 The large build is split into smaller step functions so Minecraft Bedrock can load it more reliably.
 
+Do not run `internal_steps/step_*` manually in Minecraft. They are implementation details used by `/function build`; running one of them can create only a partial map.
+
 ## 5. Quality Check Before Sharing
 
 Run:
